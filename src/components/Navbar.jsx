@@ -50,7 +50,6 @@ function Navbar() {
       <div className="flex items-center gap-4">
         {user ? (
           <>
-            {/* 🟣 صورة البروفايل + الاسم */}
             <div className="flex items-center gap-2 bg-white/70 px-3 py-1 rounded-full shadow-sm">
               {user.image ? (
                 <img
@@ -68,7 +67,6 @@ function Navbar() {
               </span>
             </div>
 
-            {/* زر تسجيل الخروج */}
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
