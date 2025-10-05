@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 const MotionLink = motion(Link);
 
@@ -19,13 +20,18 @@ export default function Register() {
   const password = watch("password");
 
   const onSubmit = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 1200)); 
-    const success = await signup(data);
+    await new Promise((resolve) => setTimeout(resolve, 1200));
+    try {
+      const success = await signup(data);
 
-    if (success) {
-      setTimeout(() => navigate("/"), 600);
-    } else {
-      alert("❌ Registration failed, please try again.");
+      if (success) {
+        toast.success("🎉 Registration successful! Please log in.");
+        setTimeout(() => navigate("/login"), 1200);
+      } else {
+        toast.error("❌ Registration failed, please try again.");
+      }
+    } catch (error) {
+      toast.error("⚠️ Something went wrong: " + error.message);
     }
   };
 
@@ -65,9 +71,7 @@ export default function Register() {
               {...register("name", { required: "⚠️ Name is required" })}
             />
             {errors.name && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.name.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
             )}
           </motion.div>
 
@@ -85,9 +89,7 @@ export default function Register() {
               })}
             />
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email.message}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
             )}
           </motion.div>
 

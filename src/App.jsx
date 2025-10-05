@@ -6,12 +6,15 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { AuthProvider } from "./context/AuthProvider";
 import AddPost from "./pages/NewPost";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Navbar />
+
+        <Toaster position="top-center" reverseOrder={false} />
 
         <div className="container mx-auto p-4">
           <Routes>
@@ -20,8 +23,6 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/posts/:id" element={<PostDetails />} />
             <Route path="/create-post" element={<AddPost />} />
-
-
           </Routes>
         </div>
       </AuthProvider>
