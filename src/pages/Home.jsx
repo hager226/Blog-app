@@ -1,9 +1,8 @@
-// src/pages/Home.jsx
 import { useEffect, useState, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { ThumbsUp, MessageCircle, Share2, Edit3, X, Trash2 } from "lucide-react";
-import Swal from "sweetalert2"; // ✅ استدعاء SweetAlert2
+import Swal from "sweetalert2"; 
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -163,7 +162,6 @@ function Home() {
     setEditingPostId(null);
   };
 
-  // ✅ استبدال confirm/alert بـ SweetAlert2
   const handleDeletePost = async (id) => {
     const result = await Swal.fire({
       title: "⚠️ Are you sure?",
