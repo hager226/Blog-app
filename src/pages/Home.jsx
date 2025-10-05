@@ -1,7 +1,9 @@
+// src/pages/Home.jsx
 import { useEffect, useState, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { ThumbsUp, MessageCircle, Share2, Edit3, X } from "lucide-react";
+import { ThumbsUp, MessageCircle, Share2, Edit3, X, Trash2 } from "lucide-react";
+import Swal from "sweetalert2"; // ✅ استدعاء SweetAlert2
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -161,6 +163,34 @@ function Home() {
     setEditingPostId(null);
   };
 
+  // ✅ استبدال confirm/alert بـ SweetAlert2
+  const handleDeletePost = async (id) => {
+    const result = await Swal.fire({
+      title: "⚠️ Are you sure?",
+      text: "This post will be permanently deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      await fetch(`https://blog-app-api-production-8fde.up.railway.app/posts/${id}`, {
+        method: "DELETE",
+      });
+
+      setPosts((prev) => prev.filter((p) => p.id !== id));
+
+      Swal.fire("Deleted!", "✅ Your post has been deleted.", "success");
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      Swal.fire("Error!", "❌ Failed to delete post", "error");
+    }
+  };
+
   if (loading) {
     return (
       <p className="text-center text-gray-500 mt-10 animate-pulse">
@@ -184,7 +214,10 @@ function Home() {
                 className="bg-white shadow-lg rounded-xl border border-gray-200 overflow-hidden transition hover:shadow-xl duration-300"
               >
                 <div className="flex items-center justify-between p-4 border-b border-gray-100">
-                  <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate(`/posts/${post.id}`)}>
+                  <div
+                    className="flex items-center gap-3 cursor-pointer"
+                    onClick={() => navigate(`/posts/${post.id}`)}
+                  >
                     <img
                       src={`https://ui-avatars.com/api/?name=${post.author}&background=random`}
                       alt={post.author}
@@ -194,16 +227,25 @@ function Home() {
                   </div>
 
                   {user && (user.name === post.author || user.email === post.author) && (
-                    <button
-                      onClick={() =>
-                        editingPostId === post.id
-                          ? setEditingPostId(null)
-                          : handleEditClick(post)
-                      }
-                      className="text-gray-500 hover:text-blue-600 transition cursor-pointer"
-                    >
-                      {editingPostId === post.id ? <X size={18} /> : <Edit3 size={18} />}
-                    </button>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() =>
+                          editingPostId === post.id
+                            ? setEditingPostId(null)
+                            : handleEditClick(post)
+                        }
+                        className="text-gray-500 hover:text-blue-600 transition cursor-pointer"
+                      >
+                        {editingPostId === post.id ? <X size={18} /> : <Edit3 size={18} />}
+                      </button>
+
+                      <button
+                        onClick={() => handleDeletePost(post.id)}
+                        className="text-gray-500 hover:text-red-600 transition cursor-pointer"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
                   )}
                 </div>
 
@@ -280,7 +322,10 @@ function Home() {
                         className="w-full aspect-[16/9] object-cover rounded-t-xl cursor-pointer"
                       />
                     )}
-                    <div className="p-5 cursor-pointer" onClick={() => navigate(`/posts/${post.id}`)}>
+                    <div
+                      className="p-5 cursor-pointer"
+                      onClick={() => navigate(`/posts/${post.id}`)}
+                    >
                       <h2 className="text-2xl font-semibold text-gray-800 mb-3">
                         {post.title}
                       </h2>

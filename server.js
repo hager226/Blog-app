@@ -1,3 +1,4 @@
+// server.js
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -13,13 +14,13 @@ const middlewares = jsonServer.defaults();
 server.use(jsonServer.bodyParser);
 server.use(middlewares);
 
-const getNextId = () => {
-  const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));
-  const users = db.users || [];
-  if (users.length === 0) return 1;
-  return Math.max(...users.map((u) => u.id)) + 1;
+// 🆔 فانكشن generic لحساب ID جديد لأي collection
+const getNextId = (collection) => {
+  if (!collection || collection.length === 0) return 1;
+  return Math.max(...collection.map((item) => item.id)) + 1;
 };
 
+// 📌 Register
 server.post("/register", (req, res) => {
   const { name, email, password } = req.body;
   const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));
@@ -30,10 +31,10 @@ server.post("/register", (req, res) => {
   }
 
   const newUser = {
-    id: getNextId(), 
+    id: getNextId(users),
     name,
     email,
-    password, 
+    password,
   };
 
   users.push(newUser);
@@ -43,6 +44,7 @@ server.post("/register", (req, res) => {
   res.status(201).json({ user: newUser });
 });
 
+// 📌 Login
 server.post("/login", (req, res) => {
   const { email, password } = req.body;
   const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));
@@ -56,6 +58,29 @@ server.post("/login", (req, res) => {
   res.json({ user });
 });
 
+// 📌 Add Post
+server.post("/posts", (req, res) => {
+  const { title, content, image, author } = req.body;
+  const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));
+  const posts = db.posts || [];
+
+  const newPost = {
+    id: getNextId(posts),
+    title,
+    content,
+    image,
+    author,
+    date: new Date().toISOString(),
+  };
+
+  posts.push(newPost);
+  db.posts = posts;
+  fs.writeFileSync(path.join(__dirname, "db.json"), JSON.stringify(db, null, 2));
+
+  res.status(201).json(newPost);
+});
+
+// 👇 أي راوت تاني يتعامل مع router العادي
 server.use(router);
 
 const PORT = 5000;
