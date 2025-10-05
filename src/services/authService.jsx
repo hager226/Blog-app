@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://blog-app-api-production-8fde.up.railway.app';
 
 export const login = async (userData) => {
   try {

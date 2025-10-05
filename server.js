@@ -13,7 +13,6 @@ const middlewares = jsonServer.defaults();
 server.use(jsonServer.bodyParser);
 server.use(middlewares);
 
-// ✅ دالة id متسلسل
 const getNextId = () => {
   const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));
   const users = db.users || [];
@@ -21,7 +20,6 @@ const getNextId = () => {
   return Math.max(...users.map((u) => u.id)) + 1;
 };
 
-// 📌 Register
 server.post("/register", (req, res) => {
   const { name, email, password } = req.body;
   const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));
@@ -32,10 +30,10 @@ server.post("/register", (req, res) => {
   }
 
   const newUser = {
-    id: getNextId(), // id متسلسل
+    id: getNextId(), 
     name,
     email,
-    password, // plain text
+    password, 
   };
 
   users.push(newUser);
@@ -45,7 +43,6 @@ server.post("/register", (req, res) => {
   res.status(201).json({ user: newUser });
 });
 
-// 📌 Login
 server.post("/login", (req, res) => {
   const { email, password } = req.body;
   const db = JSON.parse(fs.readFileSync(path.join(__dirname, "db.json")));

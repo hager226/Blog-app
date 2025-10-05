@@ -16,7 +16,7 @@ function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/posts?_sort=id&_order=desc");
+        const res = await fetch("https://blog-app-api-production-8fde.up.railway.app/posts?_sort=id&_order=desc");
         const data = await res.json();
 
         const normalized = data.map((p) => ({
@@ -55,7 +55,7 @@ function Home() {
               : [...(post.likesUsers || []), user.email],
           };
 
-          fetch(`http://localhost:5000/posts/${id}`, {
+          fetch(`https://blog-app-api-production-8fde.up.railway.app/posts/${id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedPost),
@@ -92,7 +92,7 @@ function Home() {
         ...postToUpdate,
         comments: [...postToUpdate.comments, { user: user.name || user.email, text }],
       };
-      await fetch(`http://localhost:5000/posts/${id}`, {
+      await fetch(`https://blog-app-api-production-8fde.up.railway.app/posts/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedPost),
@@ -115,7 +115,7 @@ function Home() {
         ...postToUpdate,
         comments: postToUpdate.comments.filter((_, i) => i !== index),
       };
-      await fetch(`http://localhost:5000/posts/${postId}`, {
+      await fetch(`https://blog-app-api-production-8fde.up.railway.app/posts/${postId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedPost),
@@ -151,7 +151,7 @@ function Home() {
       image: editForm.image,
     };
 
-    await fetch(`http://localhost:5000/posts/${id}`, {
+    await fetch(`https://blog-app-api-production-8fde.up.railway.app/posts/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedPost),

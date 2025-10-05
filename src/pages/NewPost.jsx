@@ -38,7 +38,7 @@ function AddPost() {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/posts", {
+      const res = await fetch("https://blog-app-api-production-8fde.up.railway.app/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newPost),

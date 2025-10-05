@@ -9,7 +9,7 @@ function PostDetails() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/posts/${id}`);
+        const res = await fetch(`https://blog-app-api-production-8fde.up.railway.app/posts/${id}`);
         const data = await res.json();
         setPost(data);
       } catch (error) {
