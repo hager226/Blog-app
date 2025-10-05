@@ -28,7 +28,7 @@ export default function Login() {
       setTimeout(() => navigate("/"), 600);
     } else {
       setErrorMessage("❌ Incorrect email or password");
-      setTimeout(() => setErrorMessage(""), 2500); // auto hide after 2.5s
+      setTimeout(() => setErrorMessage(""), 2500); 
     }
   };
 
@@ -60,7 +60,6 @@ export default function Login() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-4 w-full"
         >
-          {/* Email */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <input
               type="email"
@@ -81,7 +80,6 @@ export default function Login() {
             )}
           </motion.div>
 
-          {/* Password */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <input
               type="password"
@@ -96,7 +94,6 @@ export default function Login() {
             )}
           </motion.div>
 
-          {/* Error Box */}
           <AnimatePresence>
             {errorMessage && (
               <motion.div
@@ -111,7 +108,6 @@ export default function Login() {
             )}
           </AnimatePresence>
 
-          {/* Submit Button */}
           <motion.button
             whileHover={!isSubmitting ? { scale: 1.03 } : {}}
             whileTap={!isSubmitting ? { scale: 0.97 } : {}}
@@ -134,7 +130,6 @@ export default function Login() {
           </motion.button>
         </form>
 
-        {/* Register link */}
         <motion.p
           className="text-gray-700 text-sm mt-5 text-center"
           initial={{ opacity: 0 }}

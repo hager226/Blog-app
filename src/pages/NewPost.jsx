@@ -62,7 +62,6 @@ function AddPost() {
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* 📝 Post Title */}
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
               Post Title *
@@ -76,7 +75,6 @@ function AddPost() {
             />
           </div>
 
-          {/* 🖼️ Upload Image */}
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
               Upload Image
@@ -123,7 +121,6 @@ function AddPost() {
             </label>
           </div>
 
-          {/* ✏️ Description */}
           <div>
             <label className="block text-gray-700 font-semibold mb-2">
               Description *
@@ -136,7 +133,6 @@ function AddPost() {
             />
           </div>
 
-          {/* 🚀 Submit Button */}
           <button
             type="submit"
             className="w-full bg-gradient-to-r from-indigo-500 to-blue-400 text-white py-3 rounded-xl font-semibold text-lg shadow hover:opacity-90 transition cursor-pointer"

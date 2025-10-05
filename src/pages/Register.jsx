@@ -57,7 +57,6 @@ export default function Register() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-4 w-full"
         >
-          {/* Full Name */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <input
               type="text"
@@ -72,7 +71,6 @@ export default function Register() {
             )}
           </motion.div>
 
-          {/* Email */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <input
               type="email"
@@ -93,7 +91,6 @@ export default function Register() {
             )}
           </motion.div>
 
-          {/* Password */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <input
               type="password"
@@ -114,7 +111,6 @@ export default function Register() {
             )}
           </motion.div>
 
-          {/* Confirm Password */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <input
               type="password"
@@ -137,7 +133,6 @@ export default function Register() {
             )}
           </motion.div>
 
-          {/* Submit Button */}
           <motion.button
             whileHover={!isSubmitting ? { scale: 1.03 } : {}}
             whileTap={!isSubmitting ? { scale: 0.97 } : {}}
@@ -160,7 +155,6 @@ export default function Register() {
           </motion.button>
         </form>
 
-        {/* Link to Login */}
         <motion.p
           className="text-gray-700 text-sm mt-5 text-center"
           initial={{ opacity: 0 }}

@@ -37,7 +37,6 @@ function Home() {
     fetchPosts();
   }, []);
 
-  // ✅ Like handler
   const handleLike = async (id) => {
     if (!user) {
       alert("⚠️ You must be logged in to like a post!");
@@ -69,7 +68,6 @@ function Home() {
     );
   };
 
-  // ✅ Add comment
   const handleAddComment = async (id, text) => {
     if (!user) {
       alert("⚠️ You must be logged in to comment!");
@@ -102,7 +100,6 @@ function Home() {
     }
   };
 
-  // ✅ Delete comment
   const handleDeleteComment = async (postId, index) => {
     setPosts((prev) =>
       prev.map((post) =>
@@ -126,7 +123,6 @@ function Home() {
     }
   };
 
-  // ✅ Edit post
   const handleEditClick = (post) => {
     setEditingPostId(post.id);
     setEditForm({
@@ -136,7 +132,6 @@ function Home() {
     });
   };
 
-  // ✅ Upload new image in edit mode
   const handleEditImageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -148,7 +143,6 @@ function Home() {
     if (file) reader.readAsDataURL(file);
   };
 
-  // ✅ Submit edited post
   const handleEditSubmit = async (e, id) => {
     e.preventDefault();
     const updatedPost = {
@@ -189,7 +183,6 @@ function Home() {
                 key={post.id}
                 className="bg-white shadow-lg rounded-xl border border-gray-200 overflow-hidden transition hover:shadow-xl duration-300"
               >
-                {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-gray-100">
                   <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate(`/posts/${post.id}`)}>
                     <img
@@ -214,7 +207,6 @@ function Home() {
                   )}
                 </div>
 
-                {/* Edit Mode */}
                 {editingPostId === post.id ? (
                   <form
                     onSubmit={(e) => handleEditSubmit(e, post.id)}
@@ -301,7 +293,6 @@ function Home() {
                   </>
                 )}
 
-                {/* Like + Comment + Share */}
                 <div className="flex justify-around border-t border-gray-100 p-3 text-sm">
                   <button
                     onClick={() => handleLike(post.id)}
@@ -331,7 +322,6 @@ function Home() {
                   </button>
                 </div>
 
-                {/* Comments */}
                 <div className="px-5 pb-4">
                   <h3 className="text-gray-700 font-medium mt-3 mb-2">Comments</h3>
 
